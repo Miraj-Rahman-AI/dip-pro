@@ -1,14 +1,9 @@
 # YOLACT Real-time Instance Segmentation
 ## Introduction
-This is a Tensorflow 2 implementation of the paper [YOLACT: Real-time Instance Segmentation](https://arxiv.org/abs/1904.02689) accepted in ICCV2019. The paper presents a fully-convolutional model for real-instance segmentation based on extending the existing architecture for object detection and its own idea of parallel prototype generation. In this repo, my goal is to provide a general way to use this model, let users have more flexible options (custom dataset, different backbone choice, anchor scale and learning rate schedue) for their own specific need based on idea from original paper.
-
-## Model
-Here is the illustration of YOLACT from original paper.
-![ad](https://github.com/leohsuofnthu/Tensorflow-YOLACT/blob/master/images/model.png)
+YOLACT, which stands for "You Only Look At Coefficients," represents a seminal advancement in the field of computer vision by establishing a new paradigm for real-time instance segmentation that fundamentally re-architects the traditional detection-then-segmentation pipeline. Unlike its two-stage predecessors like Mask R-CNN, YOLACT introduces a one-stage, fully-convolutional approach that operates in parallel: it simultaneously generates a set of instance-agnostic "prototype masks" covering the entire image space while a separate prediction head computes class confidences, bounding boxes, and a unique vector of "mask coefficients" for each detected object. The final, high-quality instance mask is then dynamically assembled in a single, computationally trivial step by linearly combining these prototype masks with the predicted coefficients. This parallel design not only preserves spatial coherence across the image but also eliminates the significant computational bottleneck of feature localization and mask generation, enabling YOLACT to achieve unprecedented real-time performance (over 30 FPS) on a single GPU and thereby setting a new benchmark for solving complex scene understanding tasks under strict latency constraints.
 
 ## A. Dataset and Pre-processsing
-
-### 1. Prepare the COCO 2017 TFRecord Dataset
+### Prepare the COCO 2017 TFRecord Dataset
 [2017 Train images](http://images.cocodataset.org/zips/train2017.zip)  / [2017 Val images](http://images.cocodataset.org/zips/val2017.zip) / [2017 Annotations](http://images.cocodataset.org/annotations/annotations_trainval2017.zip) <br/>
 
 Extract the ```/train2017```, ```/val2017```, and ```/annotations/instances_train2017.json```, ```/annotations/instances_val2017.json ```from annotation to ```./data``` folder of the repo, and run:
@@ -20,9 +15,6 @@ python -m  data.coco_tfrecord_creator -train_image_dir './data/train2017'
                                       -val_annotations_file './data/instances_val2017.json' 
                                       -output_dir './data/coco'
 ```
-### 2. Prepare the Pascal SBD Dataset
-[benchmark.tgz](http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/semantic_contours/benchmark.tgz)  /
-[Pascal SBD annotation](https://drive.google.com/file/d/1ExrRSPVctHW8Nxrn0SofU1lVhK5Wn0_S/view) (Here is the COCO-style annotation from original yolact repo)  <br/>
 
 Extract the ```/benchmark/dataset/img ``` folder from benchmark.tgz, and ```pascal_sbd_train.json```, ```pascal_sbd_valid.json``` from annotation to ```./data``` folder of the repo. Divinding images into 2 folders (```/pascal_train``` for training, ```/pascal_val``` for validation images.) and run:
 
@@ -34,7 +26,7 @@ python -m  data.coco_tfrecord_creator -train_image_dir './data/pascal_train'
                                       -output_dir './data/pascal'
 ```
 
-### 3. Prepare your Custom Dataset
+### Prepare Custom Dataset
 Create a folder of training images, a folder of validation images, and a COCO-style annotation like above for your dataset in ```./data``` folder of the repo, and run:
 
 ```bash
@@ -82,14 +74,14 @@ The configuration for experiment can be adjust in ```config.py```. The default h
 | `MAX_NUM_DETECTION` | The maximum number of detection.|
 
 
-### 2. Configuration for Custom Dataset (to be updated)
+### Configuration for Custom Dataset (to be updated)
 ```bash
 
 
 
 
 ```
-### 3. Check the Dataset Sample 
+### Check the Dataset Sample 
 ```bash
 
 
@@ -97,7 +89,7 @@ The configuration for experiment can be adjust in ```config.py```. The default h
 
 ```
 
-### 4. Training Script
+### Training Script
 -> Training for COCO:
 ```bash
 python train.py -name 'coco'
@@ -168,14 +160,6 @@ There are serval evaluation scenario.
 
 ```
 
-## Pretrain Weights (to be updated)
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
-## Authors
-
-* **HSU, CHIH-CHAO** - *Professional Machine Learning Master Student at [Mila](https://mila.quebec/)* 
 
 ## Reference
 * https://github.com/dbolya/yolact
