@@ -1,8 +1,6 @@
 import os
-
 from torch.utils.data import Dataset
 import SimpleITK as sitk
-
 from utils.utils import extract_random_patch
 
 
