@@ -3,7 +3,6 @@ import re
 import argparse
 import logging
 from pathlib import Path
-
 import numpy as np
 from scipy import ndimage
 import SimpleITK as sitk
