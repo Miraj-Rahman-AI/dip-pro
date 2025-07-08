@@ -3,13 +3,11 @@ import time
 import argparse
 import numpy as np
 import logging
-
 import matplotlib.pyplot as plt
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import DataLoader
-
 from data.dataset import CSIDataset
 from utils.metrics import DiceCoeff, Segloss
 from iterativeFCN import IterativeFCN
